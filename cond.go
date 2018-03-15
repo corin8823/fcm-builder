@@ -49,6 +49,7 @@ type Cond interface {
 	IsValid() bool
 }
 
+// CondTopic is topic struct
 type CondTopic struct {
 	Topic string
 }
@@ -81,19 +82,19 @@ func (c CondTopic) IsValid() bool {
 	return c.Topic != ""
 }
 
-// ToCondition convert a builder or cond to condition string and args
-func ToCondition(cond Cond) (string, []interface{}, error) {
+// ToCondition convert a builder or cond to condition string
+func ToCondition(cond Cond) (string, error) {
 	return condToExpr(cond.(Cond))
 }
 
-func condToExpr(cond Cond) (string, []interface{}, error) {
+func condToExpr(cond Cond) (string, error) {
 	if cond == nil || !cond.IsValid() {
-		return "", nil, nil
+		return "", nil
 	}
 
 	w := NewWriter()
 	if err := cond.WriteTo(w); err != nil {
-		return "", nil, err
+		return "", err
 	}
-	return w.writer.String(), w.args, nil
+	return w.writer.String(), nil
 }
