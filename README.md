@@ -1,4 +1,5 @@
 # fcm-builder
+Topic String builder of Firebase Cloud Messaging (FCM) for golang
 
 # usage
 

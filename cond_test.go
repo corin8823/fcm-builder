@@ -21,8 +21,26 @@ func TestBuilder_Cond(t *testing.T) {
 	}
 
 	{
+		cond, err := ToCondition(CondNot{CondTopic{"test1"}}.And(CondTopic{"test2"}))
+		assert.Equal("!('test1' in topics) && 'test2' in topics", cond)
+		assert.NoError(err)
+	}
+
+	{
 		cond, err := ToCondition(CondTopic{"test1"}.Or(CondTopic{"test2"}))
 		assert.Equal("'test1' in topics || 'test2' in topics", cond)
+		assert.NoError(err)
+	}
+
+	{
+		cond, err := ToCondition(CondTopic{"test1"}.And(CondNot{CondTopic{"test2"}}))
+		assert.Equal("'test1' in topics && !('test2' in topics)", cond)
+		assert.NoError(err)
+	}
+
+	{
+		cond, err := ToCondition(CondTopic{"test1"}.Or(CondNot{CondTopic{"test2"}}))
+		assert.Equal("'test1' in topics || !('test2' in topics)", cond)
 		assert.NoError(err)
 	}
 
@@ -33,8 +51,8 @@ func TestBuilder_Cond(t *testing.T) {
 	}
 
 	{
-		cond, err := ToCondition(CondTopic{"test1"}.And(CondTopic{"test2"}.Or(CondTopic{"test3"})))
-		assert.Equal("'test1' in topics && ('test2' in topics || 'test3' in topics)", cond)
+		cond, err := ToCondition(CondTopic{"test1"}.And(CondNot{CondTopic{"test2"}}.Or(CondTopic{"test3"})))
+		assert.Equal("'test1' in topics && (!('test2' in topics) || 'test3' in topics)", cond)
 		assert.NoError(err)
 	}
 }
