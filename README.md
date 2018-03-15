@@ -1,7 +1,17 @@
 # fcm-builder
-Topic String builder of Firebase Cloud Messaging (FCM) for golang
+topic builder of Firebase Cloud Messaging (FCM) for golang
 
 # usage
+```
+// Build condition for fcm
+cond, err := ToCondition(CondNot{CondTopic{"NewUserTopic"}}.And(CondTopic{"MaleUserTopic"}))
+if err != nil {
+    log.Fatal(err)
+}
+
+fmt.Printf("Topic string: %d", cond)
+// "Topic string: !('NewUserTopic' in topics) && 'MaleUserTopic' in topics"
+```
 
 ## Acknowledgments
 Inspired by [go-xorm/builder](https://github.com/go-xorm/builder)
