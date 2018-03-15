@@ -1,4 +1,5 @@
 # fcm-builder
+[![Build Status](https://travis-ci.org/corin8823/fcm-builder.svg?branch=master)](https://travis-ci.org/corin8823/fcm-builder)
 topic builder of Firebase Cloud Messaging (FCM) for golang
 
 # usage
